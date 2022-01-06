@@ -51,7 +51,7 @@ NumPy provides a well-known, powerful API for working with numerical data. For c
 
 ```{code-cell} ipython3
 :id: kZaOXL7-uvUP
-:outputId: 17a9ee0a-8719-44bb-a9fe-4c9f24649fef
+:outputId: 868e2fd0-bef8-4b94-bc2b-4c2f42ebf410
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -63,7 +63,7 @@ plt.plot(x_np, y_np);
 
 ```{code-cell} ipython3
 :id: 18XbGpRLuZlr
-:outputId: 9e98d928-1925-45b1-d886-37956ca95e7c
+:outputId: 7bf0aba5-ba31-4e78-d6a8-a0c7a673f6f1
 
 import jax.numpy as jnp
 
@@ -80,14 +80,14 @@ The arrays themselves are implemented as different Python types:
 
 ```{code-cell} ipython3
 :id: PjFFunI7xNe8
-:outputId: e1706c61-2821-437a-efcd-d8082f913c1f
+:outputId: 63a50f69-a308-4693-9a36-5a5c693fb9cc
 
 type(x_np)
 ```
 
 ```{code-cell} ipython3
 :id: kpv5K7QYxQnX
-:outputId: 8a3f1cb6-c6d6-494c-8efe-24a8217a9d55
+:outputId: 5d3402dd-ee3b-4a08-85bb-2be2db91bb67
 
 type(x_jnp)
 ```
@@ -102,7 +102,7 @@ Here is an example of mutating an array in NumPy:
 
 ```{code-cell} ipython3
 :id: fzp-y1ZVyGD4
-:outputId: 300a44cc-1ccd-4fb2-f0ee-2179763f7690
+:outputId: a53354ca-c770-45a4-f99c-3fec27774b85
 
 # NumPy: mutable arrays
 x = np.arange(10)
@@ -116,7 +116,7 @@ The equivalent in JAX results in an error, as JAX arrays are immutable:
 
 ```{code-cell} ipython3
 :id: pCPX0JR-yM4i
-:outputId: 02a442bc-8f23-4dce-9500-81cd28c0b21f
+:outputId: 74807996-db51-4d95-89e1-1a3c8c074302
 :tags: [raises-exception]
 
 # JAX: immutable arrays
@@ -126,11 +126,11 @@ x[0] = 10
 
 +++ {"id": "yRYF0YgO3F4H"}
 
-For updating individual elements, JAX provides an [indexed update syntax](https://jax.readthedocs.io/en/latest/jax.ops.html#syntactic-sugar-for-indexed-update-operators) that returns an updated copy:
+For updating individual elements, JAX provides an [indexed update syntax](https://jax.readthedocs.io/en/latest/jax.ops.html#indexed-update-operators) that returns an updated copy:
 
 ```{code-cell} ipython3
 :id: 8zqPEAeP3UK5
-:outputId: 7e6c996d-d0b0-4d52-e722-410ba78eb3b1
+:outputId: cc30033d-a2db-4038-c77d-38b115e1badf
 
 y = x.at[0].set(10)
 print(x)
@@ -155,7 +155,7 @@ For example, while `jax.numpy` will implicitly promote arguments to allow operat
 
 ```{code-cell} ipython3
 :id: c6EFPcj12mw0
-:outputId: 730e2ca4-30a5-45bc-923c-c3a5143496e2
+:outputId: 4b633ee9-4011-40c3-bd79-45353721863f
 
 import jax.numpy as jnp
 jnp.add(1, 1.0)  # jax.numpy API implicitly promotes mixed types.
@@ -163,7 +163,7 @@ jnp.add(1, 1.0)  # jax.numpy API implicitly promotes mixed types.
 
 ```{code-cell} ipython3
 :id: 0VkqlcXL2qSp
-:outputId: 601b0562-3e6a-402d-f83b-3afdd1e7e7c4
+:outputId: d1bacdb8-d195-4bf8-b153-7d0439395a92
 :tags: [raises-exception]
 
 from jax import lax
@@ -176,7 +176,7 @@ If using `jax.lax` directly, you'll have to do type promotion explicitly in such
 
 ```{code-cell} ipython3
 :id: 3PNQlieT81mi
-:outputId: cb3ed074-f410-456f-c086-23107eae2634
+:outputId: 7a3bc794-8107-47a1-fae6-01e1ac015594
 
 lax.add(jnp.float32(1), 1.0)
 ```
@@ -189,7 +189,7 @@ For example, consider a 1D convolution, which can be expressed in NumPy this way
 
 ```{code-cell} ipython3
 :id: Bv-7XexyzVCN
-:outputId: f5d38cd8-e7fc-49e2-bff3-a0eee306cb54
+:outputId: 76a74f3b-f735-45cd-bcbe-1f877b71ff23
 
 x = jnp.array([1, 2, 1])
 y = jnp.ones(10)
@@ -202,7 +202,7 @@ Under the hood, this NumPy operation is translated to a much more general convol
 
 ```{code-cell} ipython3
 :id: pi4f6ikjzc3l
-:outputId: b9b37edc-b911-4010-aaf8-ee8f500111d7
+:outputId: e9d8214b-40e0-44b6-a814-4441dc0274ca
 
 from jax import lax
 result = lax.conv_general_dilated(
@@ -215,7 +215,7 @@ result[0, 0]
 
 +++ {"id": "7mdo6ycczlbd"}
 
-This is a batched convolution operation designed to be efficient for the types of convolutions often used in deep neural nets. It requires much more boilerplate, but is far more flexible and scalable than the convolution provided by NumPy (See [JAX Sharp Bits: Convolutions](https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#%F0%9F%94%AA-Convolutions) for more detail on JAX convolutions).
+This is a batched convolution operation designed to be efficient for the types of convolutions often used in deep neural nets. It requires much more boilerplate, but is far more flexible and scalable than the convolution provided by NumPy (See [Convolutions in JAX](https://jax.readthedocs.io/en/latest/notebooks/convolutions.html) for more detail on JAX convolutions).
 
 At their heart, all `jax.lax` operations are Python wrappers for operations in XLA; here, for example, the convolution implementation is provided by [XLA:ConvWithGeneralPadding](https://www.tensorflow.org/xla/operation_semantics#convwithgeneralpadding_convolution).
 Every JAX operation is eventually expressed in terms of these fundamental XLA operations, which is what enables just-in-time (JIT) compilation.
@@ -261,7 +261,7 @@ This function returns the same results as the original, up to standard floating-
 
 ```{code-cell} ipython3
 :id: oz7zzyS3AwMc
-:outputId: 914f9242-82c4-4365-abb2-77843a704e03
+:outputId: 623f2bb8-6f3b-4951-ad7a-8d27dd920d32
 
 np.random.seed(1701)
 X = jnp.array(np.random.rand(10000, 10))
@@ -274,7 +274,7 @@ But due to the compilation (which includes fusing of operations, avoidance of al
 
 ```{code-cell} ipython3
 :id: 6mUB6VdDAEIY
-:outputId: 5d7e1bbd-4064-4fe3-f3d9-5435b5283199
+:outputId: dc9ac960-40be-40a6-8726-d302d6416426
 
 %timeit norm(X).block_until_ready()
 %timeit norm_compiled(X).block_until_ready()
@@ -288,7 +288,7 @@ For example, this operation can be executed in op-by-op mode:
 
 ```{code-cell} ipython3
 :id: YfZd9mW7CSKM
-:outputId: 899fedcc-0857-4381-8f57-bb653e0aa2f1
+:outputId: 5c1a5913-9234-466d-93c2-ecb0c40255ef
 
 def get_negatives(x):
   return x[x < 0]
@@ -303,7 +303,7 @@ But it returns an error if you attempt to execute it in jit mode:
 
 ```{code-cell} ipython3
 :id: yYWvE4rxCjPK
-:outputId: 765b46d3-49cd-41b7-9815-e8bb7cd80175
+:outputId: 10856a86-610f-4ca7-d7b0-bc59ce793422
 :tags: [raises-exception]
 
 jit(get_negatives)(x)
@@ -327,7 +327,7 @@ To use `jax.jit` effectively, it is useful to understand how it works. Let's put
 
 ```{code-cell} ipython3
 :id: TfjVIVuD4gnc
-:outputId: df6ad898-b047-4ad1-eb18-2fbcb3fd2ab3
+:outputId: 4953652a-4e17-4286-8923-498cb4ff92fd
 
 @jit
 def f(x, y):
@@ -353,7 +353,7 @@ When we call the compiled function again on matching inputs, no re-compilation i
 
 ```{code-cell} ipython3
 :id: xGntvzNH7skE
-:outputId: 66694b8b-181f-4635-a8e2-1fc7f244d94b
+:outputId: 8f7d9c40-9e47-47b1-ea9d-87cfe66d9533
 
 x2 = np.random.randn(3, 4)
 y2 = np.random.randn(4)
@@ -366,7 +366,7 @@ The extracted sequence of operations is encoded in a JAX expression, or *jaxpr* 
 
 ```{code-cell} ipython3
 :id: 89TMp_Op5-JZ
-:outputId: 151210e2-af6f-4950-ac1e-9fdb81d4aae1
+:outputId: 7539accf-7d34-4d61-d76d-40676d488932
 
 from jax import make_jaxpr
 
@@ -382,7 +382,7 @@ Note one consequence of this: because JIT compilation is done *without* informat
 
 ```{code-cell} ipython3
 :id: A0rFdM95-Ix_
-:outputId: d7ffa367-b241-488e-df96-ad0576536605
+:outputId: 77645236-077d-489d-ab4b-eccbd459d586
 :tags: [raises-exception]
 
 @jit
@@ -398,7 +398,7 @@ If there are variables that you would not like to be traced, they can be marked 
 
 ```{code-cell} ipython3
 :id: K1C7ZnVv-lbv
-:outputId: cdbdf152-30fd-4ecb-c9ec-1d1124f337f7
+:outputId: 5c67cfca-3a90-4426-90e7-ac415eadf5f8
 
 from functools import partial
 
@@ -415,7 +415,7 @@ Note that calling a JIT-compiled function with a different static argument resul
 
 ```{code-cell} ipython3
 :id: sXqczBOrG7-w
-:outputId: 3a3f50e6-d1fc-42bb-d6df-eb3d206e4b67
+:outputId: 2362d2a5-f6d3-4154-fb83-df32e2ca88bb
 
 f(1, False)
 ```
@@ -440,7 +440,7 @@ This distinction between static and traced values makes it important to think ab
 
 ```{code-cell} ipython3
 :id: XJCQ7slcD4iU
-:outputId: a89a5614-7359-4dc7-c165-03e7d0fc6610
+:outputId: 8348f0df-fa24-427e-e69c-b96e2ec37822
 :tags: [raises-exception]
 
 import jax.numpy as jnp
@@ -456,11 +456,11 @@ f(x)
 
 +++ {"id": "ZO3GMGrHBZDS"}
 
-This fails with an error specifying that a tracer was found in `jax.numpy.reshape`. Let's add some print statements to the function to understand why this is happening:
+This fails with an error specifying that a tracer was found instead of a 1D sequence of concrete values of integer type. Let's add some print statements to the function to understand why this is happening:
 
 ```{code-cell} ipython3
 :id: Cb4mbeVZEi_q
-:outputId: f72c1ce3-950c-400f-bfea-10c0d0118911
+:outputId: a5a85328-6928-42bf-975e-8f47ab3c8920
 
 @jit
 def f(x):
@@ -481,7 +481,7 @@ A useful pattern is to use `numpy` for operations that should be static (i.e. do
 
 ```{code-cell} ipython3
 :id: GiovOOPcGJhg
-:outputId: 399ee059-1807-4866-9beb-1c5131e38e15
+:outputId: afd05f7b-4b54-4573-c709-2a72bdff89e9
 
 from jax import jit
 import jax.numpy as jnp
